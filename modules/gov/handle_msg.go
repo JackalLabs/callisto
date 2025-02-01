@@ -2,9 +2,8 @@ package gov
 
 import (
 	"fmt"
-	"time"
-
 	"strconv"
+	"time"
 
 	"github.com/cosmos/cosmos-sdk/x/authz"
 

@@ -12,7 +12,7 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/forbole/juno/v5/node/local"
-	minttypes "github.com/jackalLabs/canine-chain/v3/x/jklmint/types"
+	minttypes "github.com/jackalLabs/canine-chain/v4/x/jklmint/types"
 
 	nodeconfig "github.com/forbole/juno/v5/node/config"
 
@@ -30,7 +30,7 @@ import (
 	remotestakingsource "github.com/forbole/bdjuno/v4/modules/staking/source/remote"
 	storagesource "github.com/forbole/bdjuno/v4/modules/storage/source"
 	remotestoragesource "github.com/forbole/bdjuno/v4/modules/storage/source/remote"
-	storagetypes "github.com/jackalLabs/canine-chain/v3/x/storage/types"
+	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
 )
 
 type Sources struct {

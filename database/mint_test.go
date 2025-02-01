@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	minttypes "github.com/jackalLabs/canine-chain/v3/x/jklmint/types"
+	minttypes "github.com/jackalLabs/canine-chain/v4/x/jklmint/types"
 
 	"github.com/forbole/bdjuno/v4/types"
 
@@ -12,7 +12,6 @@ import (
 )
 
 func (suite *DbTestSuite) TestBigDipperDb_SaveInflation() {
-
 	// Save the data
 	err := suite.database.SaveInflation(sdk.NewDecWithPrec(10050, 2), 100)
 	suite.Require().NoError(err)

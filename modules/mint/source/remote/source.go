@@ -3,14 +3,12 @@ package remote
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/forbole/juno/v5/node/remote"
-	minttypes "github.com/jackalLabs/canine-chain/v3/x/jklmint/types"
+	minttypes "github.com/jackalLabs/canine-chain/v4/x/jklmint/types"
 
 	mintsource "github.com/forbole/bdjuno/v4/modules/mint/source"
 )
 
-var (
-	_ mintsource.Source = &Source{}
-)
+var _ mintsource.Source = &Source{}
 
 // Source implements mintsource.Source using a remote node
 type Source struct {
@@ -28,7 +26,7 @@ func NewSource(source *remote.Source, querier minttypes.QueryClient) *Source {
 
 // GetInflation implements mintsource.Source
 func (s Source) GetInflation(height int64) (sdk.Dec, error) {
-	res, err := s.querier.Inflation(remote.GetHeightRequestContext(s.Ctx, height), &minttypes.QueryInflationRequest{})
+	res, err := s.querier.Inflation(remote.GetHeightRequestContext(s.Ctx, height), &minttypes.QueryInflation{})
 	if err != nil {
 		return sdk.Dec{}, err
 	}
@@ -38,7 +36,7 @@ func (s Source) GetInflation(height int64) (sdk.Dec, error) {
 
 // Params implements mintsource.Source
 func (s Source) Params(height int64) (minttypes.Params, error) {
-	res, err := s.querier.Params(remote.GetHeightRequestContext(s.Ctx, height), &minttypes.QueryParamsRequest{})
+	res, err := s.querier.Params(remote.GetHeightRequestContext(s.Ctx, height), &minttypes.QueryParams{})
 	if err != nil {
 		return minttypes.Params{}, nil
 	}

@@ -71,15 +71,19 @@ test-unit: start-docker-test
 ###############################################################################
 ###                                Linting                                  ###
 ###############################################################################
-golangci_lint_cmd=github.com/golangci/golangci-lint/cmd/golangci-lint
+golangci_lint_cmd=golangci-lint
 
-lint:
+format-tools:
+	go install mvdan.cc/gofumpt@v0.6.0
+	gofumpt -l -w .
+
+lint: format-tools
 	@echo "--> Running linter"
-	@go run $(golangci_lint_cmd) run --timeout=10m
+	$(golangci_lint_cmd) run --timeout=10m
 
 lint-fix:
 	@echo "--> Running linter"
-	@go run $(golangci_lint_cmd) run --fix --out-format=tab --issues-exit-code=0
+	$(golangci_lint_cmd) run --fix --out-format=tab --issues-exit-code=0
 
 .PHONY: lint lint-fix
 

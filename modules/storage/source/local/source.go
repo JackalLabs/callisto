@@ -7,7 +7,7 @@ package local
 // 	"github.com/forbole/juno/v5/node/local"
 
 // 	storagesource "github.com/forbole/bdjuno/v4/modules/storage/source"
-// 	storagetypes "github.com/jackalLabs/canine-chain/v3/x/storage/types"
+// 	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
 // )
 
 // var (

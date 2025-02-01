@@ -1,11 +1,11 @@
 package source
 
 import (
-	storagetypes "github.com/jackalLabs/canine-chain/v3/x/storage/types"
+	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
 )
 
 type Source interface {
 	Params(height int64) (storagetypes.Params, error)
 	Providers(height int64) ([]storagetypes.Providers, error)
-	Strays(height int64) ([]storagetypes.Strays, error)
+	Files(height int64) ([]storagetypes.UnifiedFile, error)
 }

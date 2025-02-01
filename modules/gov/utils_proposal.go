@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	minttypes "github.com/jackalLabs/canine-chain/v3/x/jklmint/types"
-	storagetypes "github.com/jackalLabs/canine-chain/v3/x/storage/types"
+	minttypes "github.com/jackalLabs/canine-chain/v4/x/jklmint/types"
+	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
 
 	tmctypes "github.com/cometbft/cometbft/rpc/core/types"
 	proposaltypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
@@ -233,7 +233,7 @@ func (m *Module) updateProposalValidatorStatusesSnapshot(
 		return fmt.Errorf("error while getting validator statuses: %s", err)
 	}
 
-	var snapshots = make([]types.ProposalValidatorStatusSnapshot, len(validators))
+	snapshots := make([]types.ProposalValidatorStatusSnapshot, len(validators))
 	for index, validator := range validators {
 		consAddr, err := validator.GetConsAddr()
 		if err != nil {

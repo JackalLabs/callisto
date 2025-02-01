@@ -2,14 +2,12 @@ package remote
 
 import (
 	"github.com/forbole/juno/v5/node/remote"
-	storagetypes "github.com/jackalLabs/canine-chain/v3/x/storage/types"
+	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
 
 	storagesource "github.com/forbole/bdjuno/v4/modules/storage/source"
 )
 
-var (
-	_ storagesource.Source = &Source{}
-)
+var _ storagesource.Source = &Source{}
 
 // Source implements storagesource.Source using a remote node
 type Source struct {
@@ -27,7 +25,7 @@ func NewSource(source *remote.Source, querier storagetypes.QueryClient) *Source 
 
 // Params implements storagesource.Source
 func (s Source) Params(height int64) (storagetypes.Params, error) {
-	res, err := s.querier.Params(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryParamsRequest{})
+	res, err := s.querier.Params(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryParams{})
 	if err != nil {
 		return storagetypes.Params{}, nil
 	}
@@ -37,7 +35,7 @@ func (s Source) Params(height int64) (storagetypes.Params, error) {
 
 // Providers implements storagesource.Source
 func (s Source) Providers(height int64) ([]storagetypes.Providers, error) {
-	res, err := s.querier.ProvidersAll(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryAllProvidersRequest{})
+	res, err := s.querier.AllProviders(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryAllProviders{})
 	if err != nil {
 		return []storagetypes.Providers{}, nil
 	}
@@ -45,12 +43,12 @@ func (s Source) Providers(height int64) ([]storagetypes.Providers, error) {
 	return res.Providers, nil
 }
 
-// Strays implements storagesource.Source
-func (s Source) Strays(height int64) ([]storagetypes.Strays, error) {
-	res, err := s.querier.StraysAll(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryAllStraysRequest{})
+// Files implements storagesource.Source
+func (s Source) Files(height int64) ([]storagetypes.UnifiedFile, error) {
+	res, err := s.querier.AllFiles(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryAllFiles{})
 	if err != nil {
-		return []storagetypes.Strays{}, nil
+		return []storagetypes.UnifiedFile{}, nil
 	}
 
-	return res.Strays, nil
+	return res.Files, nil
 }

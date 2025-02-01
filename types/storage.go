@@ -1,6 +1,6 @@
 package types
 
-import storagetypes "github.com/jackalLabs/canine-chain/v3/x/storage/types"
+import storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
 
 // StorageParams represents the x/storage parameters
 type StorageParams struct {
@@ -37,7 +37,8 @@ func NewStorageProvidersList(
 	creator string,
 	keybaseIdentity string,
 	authClaimers []string,
-	height int64) *StorageProvidersList {
+	height int64,
+) *StorageProvidersList {
 	return &StorageProvidersList{
 		Address:         address,
 		IP:              ip,

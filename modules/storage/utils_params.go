@@ -19,7 +19,6 @@ func (m *Module) UpdateParams(height int64) error {
 	}
 
 	return m.db.SaveStorageParams(types.NewStorageParams(params, height))
-
 }
 
 // UpdateProviders gets the updated providers list and stores it inside the database
@@ -33,5 +32,4 @@ func (m *Module) UpdateProviders(height int64) error {
 	}
 
 	return m.db.SaveStorageProviders(providers, height)
-
 }

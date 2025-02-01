@@ -23,7 +23,8 @@ type Module struct {
 // NewModule returns a new Module instance
 func NewModule(
 	source storagesource.Source,
-	cdc codec.Codec, db *database.Db) *Module {
+	cdc codec.Codec, db *database.Db,
+) *Module {
 	return &Module{
 		cdc:    cdc,
 		db:     db,

@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/forbole/bdjuno/v4/modules/utils"
-	minttypes "github.com/jackalLabs/canine-chain/v3/x/jklmint/types"
+	minttypes "github.com/jackalLabs/canine-chain/v4/x/jklmint/types"
 
 	"github.com/go-co-op/gocron"
 	"github.com/rs/zerolog/log"
@@ -41,7 +41,7 @@ func (m *Module) UpdateInflation() error {
 	}
 
 	// Get the inflation
-	resp, err := http.Get("https://api.jackal.forbole.com/cosmos/mint/v1beta1/inflation")
+	resp, err := http.Get("https://internalapi.jackalprotocol.com/cosmos/mint/v1beta1/inflation")
 	if err != nil {
 		return fmt.Errorf("error while querying API for inflation value: %s", err)
 	}
