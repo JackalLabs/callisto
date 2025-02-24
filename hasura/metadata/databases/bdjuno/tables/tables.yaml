@@ -26,6 +26,8 @@
 - "!include public_software_upgrade_plan.yaml"
 - "!include public_staking_params.yaml"
 - "!include public_staking_pool.yaml"
+- "!include public_storage_providers.yaml"
+- "!include public_storage_params.yaml"
 - "!include public_supply.yaml"
 - "!include public_token.yaml"
 - "!include public_token_price.yaml"
