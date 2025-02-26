@@ -5,7 +5,8 @@ import (
 )
 
 type Source interface {
-	Params(height int64) (storagetypes.Params, error)
-	Providers(height int64) ([]storagetypes.Providers, error)
-	Files(height int64) ([]storagetypes.UnifiedFile, error)
+	GetParams(height int64) (storagetypes.Params, error)
+	GetProviders(height int64) ([]storagetypes.Providers, error)
+	GetFiles(height int64) ([]storagetypes.UnifiedFile, error)
+	GetActiveProviders(height int64) ([]storagetypes.ActiveProviders, error)
 }

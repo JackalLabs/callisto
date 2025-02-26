@@ -23,8 +23,8 @@ func NewSource(source *remote.Source, querier storagetypes.QueryClient) *Source 
 	}
 }
 
-// Params implements storagesource.Source
-func (s Source) Params(height int64) (storagetypes.Params, error) {
+// GetParams implements storagesource.Source
+func (s Source) GetParams(height int64) (storagetypes.Params, error) {
 	res, err := s.querier.Params(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryParams{})
 	if err != nil {
 		return storagetypes.Params{}, nil
@@ -33,8 +33,8 @@ func (s Source) Params(height int64) (storagetypes.Params, error) {
 	return res.Params, nil
 }
 
-// Providers implements storagesource.Source
-func (s Source) Providers(height int64) ([]storagetypes.Providers, error) {
+// GetProviders implements storagesource.Source
+func (s Source) GetProviders(height int64) ([]storagetypes.Providers, error) {
 	res, err := s.querier.AllProviders(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryAllProviders{})
 	if err != nil {
 		return []storagetypes.Providers{}, nil
@@ -43,12 +43,22 @@ func (s Source) Providers(height int64) ([]storagetypes.Providers, error) {
 	return res.Providers, nil
 }
 
-// Files implements storagesource.Source
-func (s Source) Files(height int64) ([]storagetypes.UnifiedFile, error) {
+// GetFiles implements storagesource.Source
+func (s Source) GetFiles(height int64) ([]storagetypes.UnifiedFile, error) {
 	res, err := s.querier.AllFiles(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryAllFiles{})
 	if err != nil {
 		return []storagetypes.UnifiedFile{}, nil
 	}
 
 	return res.Files, nil
+}
+
+// ActiveProviders implements storagesource.Source
+func (s Source) GetActiveProviders(height int64) ([]storagetypes.ActiveProviders, error) {
+	res, err := s.querier.ActiveProviders(remote.GetHeightRequestContext(s.Ctx, height), &storagetypes.QueryActiveProviders{})
+	if err != nil {
+		return []storagetypes.ActiveProviders{}, nil
+	}
+
+	return res.Providers, nil
 }
