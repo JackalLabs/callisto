@@ -16,20 +16,19 @@ func NewStorageParams(params storagetypes.Params, height int64) *StorageParams {
 	}
 }
 
-// StorageProvidersList represents the x/storage providers
-type StorageProvidersList struct {
+// StorageProvider represents the x/storage providers
+type StorageProvider struct {
 	Address         string
-	IP              string
-	TotalSpace      string
+	Ip              string
+	Totalspace      string
 	BurnedContracts string
 	Creator         string
 	KeybaseIdentity string
 	AuthClaimers    []string
-	Height          int64
 }
 
-// NewStorageProvidersList allows to build a new StorageProvidersList instance
-func NewStorageProvidersList(
+// NewStorageProvider allows to build a new StorageProvider instance
+func NewStorageProvider(
 	address string,
 	ip string,
 	totalspace string,
@@ -37,16 +36,14 @@ func NewStorageProvidersList(
 	creator string,
 	keybaseIdentity string,
 	authClaimers []string,
-	height int64,
-) *StorageProvidersList {
-	return &StorageProvidersList{
+) *StorageProvider {
+	return &StorageProvider{
 		Address:         address,
-		IP:              ip,
-		TotalSpace:      totalspace,
+		Ip:              ip,
+		Totalspace:      totalspace,
 		BurnedContracts: burnedContracts,
 		Creator:         creator,
 		KeybaseIdentity: keybaseIdentity,
 		AuthClaimers:    authClaimers,
-		Height:          height,
 	}
 }

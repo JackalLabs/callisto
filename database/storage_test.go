@@ -40,3 +40,50 @@ func (suite *DbTestSuite) TestBigDipperDb_SaveStorageParams() {
 	suite.Require().Equal(storageParams, storedParams)
 	suite.Require().Equal(int64(10), rows[0].Height)
 }
+
+func (suite *DbTestSuite) TestBigDipperDb_SaveStorageProviders() {
+	authClaimers := []string{
+		"creator",
+		"authClaimer1",
+		"authClaimer2",
+	}
+	blockHeight := int64(91234563632)
+
+	storageProviderOne := types.NewStorageProvider(
+		"jkl1address12345678",
+		"198.162.1.3",
+		"1_000_000_000",
+		"0",
+		"creator",
+		"keybaseIdentity",
+		authClaimers,
+	)
+	storageProviderTwo := types.NewStorageProvider(
+		"jkl1address2222",
+		"198.162.1.3",
+		"1_000_000_000",
+		"0",
+		"creator",
+		"keybaseIdentity",
+		authClaimers,
+	)
+
+	storageProvidersList := []types.StorageProvider{
+		*storageProviderOne,
+		*storageProviderTwo,
+	}
+
+	err := suite.database.SaveStorageProviders(storageProvidersList, blockHeight)
+	suite.Require().NoError(err)
+
+	// !todo
+	// var rows []dbtypes.StorageParamsRow
+	// err = suite.database.Sqlx.Select(&rows, `SELECT * FROM storage_params`)
+	// suite.Require().NoError(err)
+	// suite.Require().Len(rows, 1)
+
+	// err = json.Unmarshal([]byte(rows[0].Params), &storedParams)
+	// suite.Require().NoError(err)
+	// suite.Require().Equal(storageParams, storedParams)
+	// suite.Require().Equal(int64(10), rows[0].Height)
+}
