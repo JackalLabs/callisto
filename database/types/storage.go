@@ -1,6 +1,9 @@
 package types
 
-import storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
+import (
+	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
+	"github.com/lib/pq"
+)
 
 // StorageParamsRow represents a single row of the "storage_params" table
 type StorageParamsRow struct {
@@ -11,15 +14,15 @@ type StorageParamsRow struct {
 
 // StorageProviderRow represents a single row of the "storage_providers" table
 type StorageProviderRow struct {
-	OneRowID        bool     `db:"one_row_id"`
-	Address         string   `db:"address"`
-	IP              string   `db:"ip"`
-	Totalspace      string   `db:"total_space"`
-	BurnedContracts string   `db:"burned_contracts"`
-	Creator         string   `db:"creator"`
-	KeybaseIdentity string   `db:"keybase_identity"`
-	AuthClaimers    []string `db:"auth_claimers"`
-	Height          int64    `db:"height"`
+	OneRowID        bool           `db:"one_row_id"`
+	Address         string         `db:"address"`
+	Ip              string         `db:"ip"`
+	Totalspace      string         `db:"total_space"`
+	BurnedContracts string         `db:"burned_contracts"`
+	Creator         string         `db:"creator"`
+	KeybaseIdentity string         `db:"keybase_identity"`
+	AuthClaimers    pq.StringArray `db:"auth_claimers"`
+	Height          int64          `db:"height"`
 }
 
 // NewStorageParamsRow creates a new StorageParamsRow

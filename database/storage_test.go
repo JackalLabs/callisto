@@ -47,7 +47,7 @@ func (suite *DbTestSuite) TestBigDipperDb_SaveStorageProviders() {
 		"authClaimer1",
 		"authClaimer2",
 	}
-	blockHeight := int64(91234563632)
+	blockHeight := int64(10)
 
 	storageProviderOne := types.NewStorageProvider(
 		"jkl1address12345678",
@@ -76,14 +76,12 @@ func (suite *DbTestSuite) TestBigDipperDb_SaveStorageProviders() {
 	err := suite.database.SaveStorageProviders(storageProvidersList, blockHeight)
 	suite.Require().NoError(err)
 
-	// !todo
-	// var rows []dbtypes.StorageParamsRow
-	// err = suite.database.Sqlx.Select(&rows, `SELECT * FROM storage_params`)
-	// suite.Require().NoError(err)
-	// suite.Require().Len(rows, 1)
+	var rows []dbtypes.StorageProviderRow
+	err = suite.database.Sqlx.Select(&rows, `SELECT * FROM storage_providers`)
+	suite.Require().NoError(err)
+	suite.Require().Len(rows, 2)
 
-	// err = json.Unmarshal([]byte(rows[0].Params), &storedParams)
-	// suite.Require().NoError(err)
-	// suite.Require().Equal(storageParams, storedParams)
-	// suite.Require().Equal(int64(10), rows[0].Height)
+	suite.Require().Equal(int64(10), rows[0].Height)
 }
+
+// !todo ActiveProviders
