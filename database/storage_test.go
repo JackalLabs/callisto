@@ -50,28 +50,28 @@ func (suite *DbTestSuite) TestBigDipperDb_SaveStorageProviders() {
 	}
 	blockHeight := int64(10)
 
-	storageProviderOne := types.NewStorageProvider(
-		"jkl1address12345678",
-		"198.162.1.3",
-		"1_000_000_000",
-		"0",
-		"creator",
-		"keybaseIdentity",
-		authClaimers,
-	)
-	storageProviderTwo := types.NewStorageProvider(
-		"jkl1address2222",
-		"198.162.1.3",
-		"1_000_000_000",
-		"0",
-		"creator",
-		"keybaseIdentity",
-		authClaimers,
-	)
+	storageProviderOne := storagetypes.Providers{
+		Address:         "jkl1address12345678",
+		Ip:              "198.162.1.3",
+		Totalspace:      "1_000_000_000",
+		BurnedContracts: "0",
+		Creator:         "creator",
+		KeybaseIdentity: "keybaseIdentity",
+		AuthClaimers:    authClaimers,
+	}
+	storageProviderTwo := storagetypes.Providers{
+		Address:         "jkl1address2222",
+		Ip:              "198.162.1.3",
+		Totalspace:      "1_000_000_000",
+		BurnedContracts: "0",
+		Creator:         "creator",
+		KeybaseIdentity: "keybaseIdentity",
+		AuthClaimers:    authClaimers,
+	}
 
-	storageProvidersList := []types.StorageProvider{
-		*storageProviderOne,
-		*storageProviderTwo,
+	storageProvidersList := []storagetypes.Providers{
+		storageProviderOne,
+		storageProviderTwo,
 	}
 
 	err := suite.database.SaveStorageProviders(storageProvidersList, blockHeight)
