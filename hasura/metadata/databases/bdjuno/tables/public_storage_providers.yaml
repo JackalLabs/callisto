@@ -1,0 +1,27 @@
+table:
+  name: storage_providers
+  schema: public
+object_relationships:
+  - name: block
+    using:
+      manual_configuration:
+        column_mapping:
+          height: height
+        insertion_order: null
+        remote_table:
+          name: block
+          schema: public
+select_permissions:
+  - permission:
+      allow_aggregations: true
+      columns:
+        - address
+        - ip
+        - total_space
+        - burned_contracts
+        - creator
+        - keybase_identity
+        - auth_claimers
+        - height
+      filter: {}
+    role: anonymous

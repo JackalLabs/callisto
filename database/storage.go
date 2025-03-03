@@ -18,9 +18,9 @@ func (db *Db) SaveStorageParams(params *types.StorageParams) error {
 	}
 
 	stmt := `
-INSERT INTO storage_params (params, height) 
+INSERT INTO storage_params (params, height)
 VALUES ($1, $2)
-ON CONFLICT (one_row_id) DO UPDATE 
+ON CONFLICT (one_row_id) DO UPDATE
     SET params = excluded.params,
         height = excluded.height
 WHERE storage_params.height <= excluded.height`
@@ -40,7 +40,7 @@ func (db *Db) SaveStorageProviders(providers []storagetypes.Providers, height in
 	}
 
 	storageProvidersQuery := `
-INSERT INTO storage_providers (address, ip, total_space, burned_contracts, creator, keybase_identity, auth_claimers, height) 
+INSERT INTO storage_providers (address, ip, total_space, burned_contracts, creator, keybase_identity, auth_claimers, height)
 VALUES `
 	var storageProviders []interface{}
 	var accounts []types.Account
@@ -70,7 +70,7 @@ VALUES `
 
 	storageProvidersQuery = storageProvidersQuery[:len(storageProvidersQuery)-1] // Remove the trailing ","
 	storageProvidersQuery += `
-ON CONFLICT (address) DO UPDATE 
+ON CONFLICT (address) DO UPDATE
 	SET ip = excluded.ip,
 		total_space = excluded.total_space,
 		burned_contracts = excluded.burned_contracts,
@@ -82,6 +82,47 @@ WHERE storage_providers.height <= excluded.height`
 	_, err = db.SQL.Exec(storageProvidersQuery, storageProviders...)
 	if err != nil {
 		return fmt.Errorf("error while storing storage providers infos: %s", err)
+	}
+
+	return nil
+}
+
+// SaveActiveProviders bulk saving of a list of active providers.
+
+func (db *Db) SaveActiveProviders(providers []storagetypes.ActiveProviders, height int64) error {
+	if len(providers) == 0 {
+		return nil
+	}
+
+	query := `INSERT INTO active_providers (address, height) VALUES `
+	var activeProviders []interface{}
+	var accounts []types.Account
+
+	for i, provider := range providers {
+		vi := i * 2 // Starting position for storage providers
+		accounts = append(accounts, types.NewAccount(provider.Address))
+
+		query += fmt.Sprintf("($%d,$%d),", vi+1, vi+2)
+		activeProviders = append(activeProviders,
+			provider.Address,
+			height,
+		)
+	}
+
+	// Store the accounts
+	err := db.SaveAccounts(accounts)
+	if err != nil {
+		return fmt.Errorf("error while storing active providers accounts: %s", err)
+	}
+
+	query = query[:len(query)-1] // Remove the trailing ","
+	query += `
+ON CONFLICT (address) DO UPDATE
+	SET height = excluded.height
+WHERE active_providers.height <= excluded.height`
+	_, err = db.SQL.Exec(query, activeProviders...)
+	if err != nil {
+		return fmt.Errorf("error while storing active providers infos: %s", err)
 	}
 
 	return nil
