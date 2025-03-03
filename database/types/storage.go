@@ -25,6 +25,13 @@ type StorageProviderRow struct {
 	Height          int64          `db:"height"`
 }
 
+// ActiveProviderRow represents a single row of the "active_providers" table
+type ActiveProviderRow struct {
+	OneRowID bool   `db:"one_row_id"`
+	Address  string `db:"address"`
+	Height   int64  `db:"height"`
+}
+
 // NewStorageParamsRow creates a new StorageParamsRow
 func NewStorageParamsRow(
 	params string, height int64,

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	storagetypes "github.com/jackalLabs/canine-chain/v4/x/storage/types"
+	"github.com/lib/pq"
 
 	"github.com/forbole/bdjuno/v4/types"
 
@@ -82,6 +83,26 @@ func (suite *DbTestSuite) TestBigDipperDb_SaveStorageProviders() {
 	suite.Require().Len(rows, 2)
 
 	suite.Require().Equal(int64(10), rows[0].Height)
+	suite.Require().Equal(pq.StringArray(authClaimers), rows[0].AuthClaimers)
 }
 
-// !todo ActiveProviders
+func (suite *DbTestSuite) TestBigDipperDb_SaveActiveProviders() {
+	activeProviders := []storagetypes.ActiveProviders{
+		{Address: "jkl1ActiveProviderOne"},
+		{Address: "jkl1ActiveProviderTwo"},
+		{Address: "jkl1ActiveProviderThree"},
+	}
+	blockHeight := int64(10)
+
+	err := suite.database.SaveActiveProviders(activeProviders, blockHeight)
+	suite.Require().NoError((err))
+
+	var rows []dbtypes.ActiveProviderRow
+	err = suite.database.Sqlx.Select(&rows, `SELECT * FROM active_providers`)
+	suite.Require().NoError(err)
+	suite.Require().Len(rows, 3)
+
+	for i, row := range rows {
+		suite.Require().Equal(activeProviders[i].Address, row.Address)
+	}
+}
